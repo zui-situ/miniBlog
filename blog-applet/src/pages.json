@@ -1,0 +1,89 @@
+{
+	"pages": [
+		{
+			"path": "pages/home/Home",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/message/Message",
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
+		},
+		{
+			"path": "pages/mine/Mine",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/mine/WriteBlog",
+			"style": {
+				"navigationBarTitleText": "分享你的故事"
+			}
+		},
+		{
+			"path": "pages/home/ArticleDetail",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/mine/PeopleList",
+			"style": {
+				"navigationBarTitleText": "角色列表"
+			}
+		},
+		{
+			"path": "pages/common/PeopleDetail",
+			"style": {
+				"navigationBarTitleText": "角色详情"
+			}
+		},
+		{
+			"path": "pages/mine/PersonalData",
+			"style": {
+				"navigationBarTitleText": "个人资料"
+			}
+		},
+		{
+			"path": "pages/message/Chat",
+			"style": {
+				"navigationBarTitleText": "私聊",
+				"enablePullDownRefresh": true
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#161616",
+		"selectedColor": "#161616",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/home/Home",
+			"text": "首页",
+			"iconPath": "static/images/tab/home.png",
+			"selectedIconPath": "static/images/tab/homeHL.png"
+		}, {
+			"pagePath": "pages/message/Message",
+			"text": "消息",
+			"iconPath": "static/images/tab/news.png",
+			"selectedIconPath": "static/images/tab/newsHL.png"
+		},  {
+			"pagePath": "pages/mine/Mine",
+			"text": "我的",
+			"iconPath": "static/images/tab/mine.png",
+			"selectedIconPath": "static/images/tab/mineHL.png"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	}
+}

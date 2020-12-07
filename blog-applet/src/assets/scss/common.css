@@ -1,0 +1,132 @@
+/*阿里云字体图标*/
+@font-face {
+    font-family: 'iconfont';  /* project id 1030028 */
+    src: url('//at.alicdn.com/t/font_1030028_z2ie9ushn1s.eot');
+    src: url('//at.alicdn.com/t/font_1030028_z2ie9ushn1s.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1030028_z2ie9ushn1s.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1030028_z2ie9ushn1s.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1030028_z2ie9ushn1s.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1030028_z2ie9ushn1s.svg#iconfont') format('svg');
+  }
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 32upx;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .yx-saoyisao:before {
+    content: "\e6b2";
+  }
+  .yx-shanchu-m:before {
+    content: "\e608";
+  }
+  .yx-dianzan:before {
+    content: "\e631";
+  }
+  .yx-guanbi:before {
+    content: "\e641";
+  }
+  .yx-sousuo:before {
+    content: "\e643";
+  }
+  .yx-fenxiang:before {
+    content: "\e634";
+  }
+  .yx-qiehuan:before {
+    content: "\e63d";
+  }
+  .yx-spread-line:before {
+    content: "\e63c";
+  }
+  .yx-shouqi-copy:before {
+    content: "\e661";
+  }
+  .yx-jia:before {
+    content: "\e6a9";
+  }
+  .yx-pinglun:before {
+    content: "\e662";  
+  }
+  .yx-bianji:before {
+    content: "\e63e";
+  }
+  /* 公共css */
+  body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, p, h1, h2, h3, h4,h5, h6, i, b, textarea, button, input, select, figure, figcaption,view,text {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      font-style: normal;
+      text-decoration: none; 
+      border: none;
+      font-family: "PingFangSC",sans-serif;
+      -webkit-tap-highlight-color:transparent;
+      -webkit-font-smoothing: antialiased;
+      white-space:normal; 
+      word-break:break-all;
+      box-sizing: border-box;
+  }
+  [v-cloak] { display: none; }
+  
+  /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
+  ::-webkit-scrollbar  
+  {  
+      width: 8upx;  
+      height: 10upx;  
+      background-color: #F5F5F5;  
+  }  
+    
+  /*定义滚动条轨道 内阴影+圆角*/  
+  ::-webkit-scrollbar-track  
+  {  
+      -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0);  
+      border-radius: 20upx;  
+      background-color: #F5F5F5;  
+  }  
+    
+  /*定义滑块 内阴影+圆角*/  
+  ::-webkit-scrollbar-thumb  
+  {  
+      border-radius: 20upx;  
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+      background-color: #999;  
+  }  
+  
+  input[type="button"], input[type="submit"], input[type="search"], input[type="reset"] {
+      -webkit-appearance: none;
+  }
+  
+  textarea { -webkit-appearance: none;}   
+  
+  html,body{
+      height: 100%;
+      width: 100%;
+      background-color: #fff;
+  }
+  
+  .back_img{
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+  }
+  
+  .margin{
+      margin: 0 auto;
+  }
+  
+  .hide{
+      display: none;
+  }
+  .show{
+      display: block;
+  }
+  .no-data{
+      text-align: center;
+      font-size: 28upx;
+      color: #999;
+      padding: 20upx;
+  }
+  /* 解决 Android 客户端在微信中点击图片自动放大 */
+  img {
+      pointer-events: none; 
+  }
+  
