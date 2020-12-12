@@ -20,9 +20,9 @@ export class Article {
     @prop()
     content: string
 
-    @ApiProperty({ description:'图片',type: [String]})
+    @ApiProperty({ description:'图片'})
     @prop()
-    imgList: [string]
+    imgList: Array<string>
 
     @ApiProperty({ description:'收藏数' })
     @prop()
