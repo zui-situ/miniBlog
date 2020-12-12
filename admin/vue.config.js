@@ -13,7 +13,7 @@ module.exports = {
       )
     }
   },
-  outputDir:__dirname + '/../server/admin',
+  outputDir:__dirname + '/../server/dist/apps/admin/admin',
   publicPath: process.env.NODE_ENV === 'production'
         ? '/admin/'
         : '/'
