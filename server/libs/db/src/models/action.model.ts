@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { prop, modelOptions, Ref } from '@typegoose/typegoose'
 import { User } from './user.model';
 import { Article } from './article.model';
-import { Comment } from './Comment.model';
+import { Comment } from './comment.model';
 
 //为模型添加创建时间createdAt和更新时间updatedAt
 @modelOptions({
