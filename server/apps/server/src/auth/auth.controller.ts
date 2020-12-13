@@ -63,7 +63,7 @@ export class AuthController {
     @Post('wxSaveUserByOpenId')
     @ApiOperation({ summary:'通过openid保存用户信息' })
     async wxSaveUserByOpenId(@Body() dto:GetAppIdDto):Promise<any>{
-        const response:AxiosResponse = await this.http.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${dto.appId}&secret=${process.env.APP_SECRET}&js_code=${dto.code}&grant_type=authorization_code`).toPromise();
+        const response:any = await this.http.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${dto.appId}&secret=${process.env.APP_SECRET}&js_code=${dto.code}&grant_type=authorization_code`).toPromise();
         const { openid }:{openid:string} = response.data;
         const authData:any = await this.authModel.findOne({openid});
         if(authData){
