@@ -113,12 +113,12 @@
 		nowDate:Date = new Date()
 		@appModule.Getter('user') user:any
 		@chatModule.Getter('targetMessage') targetMessage:any
-		@chatModule.Mutation('setTargetId') setTargetId:any
-		@chatModule.Mutation('delTargetId') delTargetId:any
-		@chatModule.Mutation('setTargetMessage') setTargetMessage:any
-		@chatModule.Mutation('delMessageMap') delMessageMap:any
-		@chatModule.Mutation('clearUnreadMsgCount') clearUnreadMsgCount:any
+		@chatModule.Mutation('set_target_id') setTargetId:any
+		@chatModule.Mutation('del_target_id') delTargetId:any
+		@chatModule.Mutation('del_mes_map') delMessageMap:any
+		@chatModule.Mutation('clear_unread_mes_count') clearUnreadMsgCount:any
 		@chatModule.Action('connectSocket') connectSocket: any;
+		// @chatModule.Getter('socket') socket: any;
         onLoad(opt:any) {
             this.friendId = opt.friendId;
 			this.friendName = opt.friendName;
@@ -141,7 +141,7 @@
 		}
 		//加入私聊socket
         joinFriend(){
-            let socket = this.$store.state.chat.socket;
+			let socket = this.$store.state.chat.socket;
             if(socket.connected){
                 socket.emit("joinFriendSocket", {
                     userId: this.user.userId,
@@ -177,11 +177,8 @@
 				})
 			}
 			let messages = this.targetMessage;
-			console.log(this.list);
-			console.log(this.historyNum);
 			let newMessages = messages.slice(this.list.length-this.historyNum)
 			this.list = [...this.list,...newMessages];
-			console.log(this.list);
 		}
 		//判断是否应该滚动到底部
 		judgeScrollToBottom() {
@@ -254,7 +251,6 @@
         //处理滚动
 		bindScroll(sel:any, duration = 0) {
 			const query = uni.createSelectorQuery().in(this);
-			console.log(sel);
 			query
 				.select(sel)
 				.boundingClientRect((data:any) => {

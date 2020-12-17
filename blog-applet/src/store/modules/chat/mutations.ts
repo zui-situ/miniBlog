@@ -1,14 +1,15 @@
 import Vue from 'vue';
 import {
   SET_SOCKET,
-  ADD_GROUP_MESSAGE,
-  SET_GROUP_MESSAGES,
-  ADD_FRIEND_MESSAGE,
-  SET_FRIEND_MESSAGES,
-  SET_ACTIVE_ROOM,
-  SET_GROUP_GATHER,
-  SET_FRIEND_GATHER,
-  SET_USER_GATHER,
+  SET_TARGET_MES,
+  CLEAR_UNREAD_MES_COUNT,
+  DEL_MES_MAP,
+  SET_TARGET_ID,
+  INIT_DIALOG_LIST,
+  ADD_TARGET_MES,
+  ADD_DIALOG_MES,
+  UPDATE_DIALOG_MES,
+  DEL_TARGET_ID
 } from './mutation-types';
 import { ChatState } from './state';
 import { MutationTree } from 'vuex';
@@ -21,11 +22,11 @@ const mutations: MutationTree<ChatState> = {
     state.socket = payload;
   },
   //初始化已登录用户的对话信息
-  initDialogList(state,payload) {
+  [INIT_DIALOG_LIST](state,payload) {
     state.dialogList = payload;
   },
   //更新对话信息
-  updateDialogMes(state,payload) {
+  [UPDATE_DIALOG_MES](state,payload) {
     const dialogList = state.dialogList;
     if (payload.code=='OK') {
       const info = payload.messageInfo;
@@ -49,17 +50,17 @@ const mutations: MutationTree<ChatState> = {
     }
   },
   // 添加对话信息
-  addDialogMes(state,payload) {
+  [ADD_DIALOG_MES](state,payload) {
     state.dialogList.unshift(payload);
   },
   //添加对话信息
-  addTargetMessage(state,payload) {
+  [ADD_TARGET_MES](state,payload) {
     if (payload.code=='OK') {
       state.targetMessage.push(payload.messageInfo);
     }
   },
   //设置目标信息
-  setTargetMessage(state,payload) {
+  [SET_TARGET_MES](state,payload) {
     if (payload && payload.length) {
       if (state.targetMessage.length===0) {
         state.targetMessage = payload;
@@ -69,7 +70,7 @@ const mutations: MutationTree<ChatState> = {
     }
   },
   //清零未读信息数
-  clearUnreadMsgCount(state,payload){
+  [CLEAR_UNREAD_MES_COUNT](state,payload){
     if(state.targetId != ''){
       const dialogList = state.dialogList;
       for(let i=0;i<dialogList.length;i++) {
@@ -81,15 +82,15 @@ const mutations: MutationTree<ChatState> = {
     }
   },
   //删除对应目标ID的聊天内容
-  delMessageMap(state,payload){
+  [DEL_MES_MAP](state,payload){
     state.targetMessage = [];
   },
   //设置当前聊天对象的用户的ID
-  setTargetId(state,payload) {
+  [SET_TARGET_ID](state,payload) {
     state.targetId = payload;
   },
   //删除当前聊天对象的用户的ID
-  delTargetId(state,payload) {
+  [DEL_TARGET_ID](state,payload) {
     state.targetId = '';
   }
 };

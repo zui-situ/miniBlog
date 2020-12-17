@@ -61,6 +61,7 @@
     import CardList from '../../components/CardList.vue';
     import { namespace } from 'vuex-class';
     const appModule = namespace('app');
+    const chatModule = namespace('chat');
     @Component({
         components: {
             CardList
@@ -75,7 +76,6 @@
         }]
         current:number = 0;// tabs组件的current值，表示当前活动的tab选项
         status:string = 'loadmore';
-        loginStatus:boolean = false;//登录状态
         pageNo:number = 1;
         pageSize:number = 10;
         totalPage:number = 0;
@@ -89,11 +89,12 @@
         articleTotal:number = 0;//我的文章数量
         userInfo:any = {};
         @appModule.Getter('user') user:any
+        @appModule.Getter('loginStatus') loginStatus:any
         @appModule.Action('login') login:any
+        @chatModule.Action('connectSocket') connectSocket: any;
         onLoad(){
             this.defaultBg = '../../static/images/mine/timg.jpg'
-            this.loginStatus = this.user?true:false;
-            this.init();
+            this.loginStatus && this.init();
         }
         init(){
             this.getUserInfo();
@@ -111,7 +112,7 @@
         }
         //授权按钮
 	    onGotUserInfo(e:any) {
-            let that = this;
+            let _this = this;
             //用户按了允许授权按钮 ——> 跳转登录页面
             if (e.detail.errMsg == 'getUserInfo:ok') {
                 let userInfo = e.detail.userInfo;
@@ -120,26 +121,14 @@
                     provider: 'weixin',
                     success: async function(res:any) {
                         if (res.code) {
-                            await that.login({
+                            await _this.login({
                                 "appId": process.env.VUE_APP_ID,
                                 "code": res.code,
                                 "nickName": userInfo.nickName,
                                 "avatarUrl": userInfo.avatarUrl
                             })
-                            that.loginStatus = true;
-                            that.init();
-                            //根据临时code获取用户openId
-                            // that.$http.wxSaveUserByOpenId({
-                            //     "appId": process.env.VUE_APP_ID,
-                            //     "code": res.code,
-                            //     "nickName": userInfo.nickName,
-                            //     "avatarUrl": userInfo.avatarUrl
-                            // }).then((data:any)=> {
-                            //     that.loginStatus = true;
-                            //     that.$store.commit('upDate',{token:'Bearer '+data.token});
-                            //     that.$store.commit('upDate',{openid:data.openid});
-                            //     that.$store.commit('upDate',{userId:data.user});
-                            // })
+                            _this.init();
+                            _this.connectSocket();
                         }
                     }
                 })

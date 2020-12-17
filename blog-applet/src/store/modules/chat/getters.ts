@@ -4,6 +4,7 @@ import { RootState } from '../../index';
 
 const getters: GetterTree<ChatState, RootState> = {
   socket(state) {
+    console.log(state);
     return state.socket;
   },
   targetMessage(state) {

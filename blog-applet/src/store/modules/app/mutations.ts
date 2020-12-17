@@ -5,8 +5,6 @@ import { MutationTree } from 'vuex';
 const mutations: MutationTree<AppState> = {
   [SET_USER](state, payload) {
     state.user = payload;
-    // 数据持久化
-    // uni.setStorageSync('user',payload);
   },
 
   [CLEAR_USER](state, payload) {
@@ -16,13 +14,10 @@ const mutations: MutationTree<AppState> = {
         openid:'',
         nickName:''
     };
-    // uni.setStorageSync('user','');
   },
 
   [SET_TOKEN](state, payload) {
     state.token = payload;
-    // 数据持久化
-    // uni.setStorageSync('token',payload);
   }
 };
 

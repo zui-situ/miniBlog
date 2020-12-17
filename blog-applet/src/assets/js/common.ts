@@ -1,15 +1,15 @@
 let dayjs = require('dayjs');
 
 /* 跳转tab页面方法,不能带参数 */
-const switchTab = (path) => {
+const switchTab = (path:string) => {
     uni.switchTab({url: path});   
 }
 /* 跳转页面方法,页面会被加入堆栈 */
-const navigateTo = (path) => {
+const navigateTo = (path:string) => {
     uni.navigateTo({url: path});
 }
 /* 跳转页面方法,页面不会被加入堆栈 */
-const redirectTo = (path) => {
+const redirectTo = (path:string) => {
     uni.redirectTo({url: path});
 }
 /* 关闭当前页面，返回上一页面或多级页面 */
@@ -17,7 +17,7 @@ const navigateBack = (num=1) => {
     uni.navigateBack({delta: num});
 }
 //计算与当前时间相差多少
-function getDateDiff(dateTime){
+function getDateDiff(dateTime:Date){
 	let minute = 1000 * 60,
 	    hour = minute * 60,
 	    day = hour * 24,
@@ -37,16 +37,16 @@ function getDateDiff(dateTime){
 		// result="" + parseInt(monthC) + "月前";
 	}
 	else if(weekC>=1){
-		result = "" + parseInt(weekC) + "周前";
+		result = "" + parseInt(weekC.toString()) + "周前";
 	}
 	else if(dayC>=1){
-		result = ""+ parseInt(dayC) +"天前";
+		result = ""+ parseInt(dayC.toString()) +"天前";
 	}
 	else if(hourC>=1){
-		result = ""+ parseInt(hourC) +"小时前";
+		result = ""+ parseInt(hourC.toString()) +"小时前";
 	}
 	else if(minC>=1){
-		result = ""+ parseInt(minC) +"分钟前";
+		result = ""+ parseInt(minC.toString()) +"分钟前";
 	}else result="刚刚";
 	return result;
 }
