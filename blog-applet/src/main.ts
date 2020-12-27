@@ -9,7 +9,7 @@ import common from './assets/js/common';
 Vue.config.productionTip = false
 Object.assign(Vue.prototype, common)
 Vue.prototype.$store = store;
-
+// Vue.prototype.$http = minRequest;
 const app = new Vue({
     ...App,
     minRequest,

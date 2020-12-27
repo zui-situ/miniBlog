@@ -6,7 +6,7 @@ import http from '@/models/api' ;
 
 const actions: ActionTree<AppState, RootState> = {
   async login({ commit }, payload) {
-    let res = await http.apis.wxSaveUserByOpenId({
+    let res:any = await http.apis.wxSaveUserByOpenId({
       ...payload,
     });
     if (res) {

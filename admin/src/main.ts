@@ -4,15 +4,15 @@ import './plugins/element'
 import './plugins/avue'
 import router from './router'
 import axios from 'axios';
+import http from './http';
+import store from './store';
 
 Vue.config.productionTip = false
 
-Vue.prototype.$http = axios.create({
-  baseURL: process.env.VUE_APP_API_URL,
-  timeout: 600000,
-});
+Vue.prototype.$http = http;
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

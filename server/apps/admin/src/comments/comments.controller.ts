@@ -4,6 +4,7 @@ import { Comment } from '@app/db/models/comment.model';
 import { ApiTags } from '@nestjs/swagger';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { CommentsService } from './comments.service';
 
 
 @Crud({
@@ -16,40 +17,13 @@ import { ReturnModelType } from '@typegoose/typegoose';
 
 export class CommentsController {
     //注入模块
-    constructor(@InjectModel(Comment) private model:ReturnModelType<typeof Comment>){}
+    constructor(
+        @InjectModel(Comment) private model:ReturnModelType<typeof Comment>,
+        private commentsService: CommentsService
+    ){}
     //添加路由
     @Get('option')
     async option():Promise<any>{
-        return {
-            title:'评论管理',
-            addBtn:false,
-            editBtn:false,
-            translate:false,//标记上则不返回待$符号的参数
-            viewBtn:true,
-            column:[
-                { 
-                    prop:'content',
-                    label:'内容',
-                    search:true,
-                    regex:true,
-                    searchRules: [{
-                        required: false,
-                        message: "请输入内容",
-                        trigger: "blur"
-                    }],
-                },
-                { 
-                    prop:'userName',
-                    label:'用户名',
-                    search:true,
-                    regex:true,
-                    searchRules: [{
-                        required: false,
-                        message: "请输入用户名",
-                        trigger: "blur"
-                    }],
-                },
-            ]
-        }
+        return this.commentsService.option()
     }
 }

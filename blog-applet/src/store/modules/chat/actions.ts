@@ -42,7 +42,7 @@ const actions: ActionTree<ChatState, RootState> = {
   },
   async handleChatData({ commit, state, dispatch, rootState }, callback){
     console.log(rootState);
-    let list = await http.apis.friendList({})
+    let list:any = await http.apis.friendList({})
     list.map((item:any)=>{
       if(state.socket.connected){
         state.socket.emit("joinFriendSocket", {

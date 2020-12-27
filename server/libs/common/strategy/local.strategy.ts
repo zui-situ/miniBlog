@@ -24,6 +24,10 @@ export class LocalStrategy extends PassportStrategy(Strategy,'local') {
         if(!compareSync(password,user.password)){
             throw new BadRequestException('密码不正确')
         }
+
+        if(user.jurisdiction!=1){
+            throw new BadRequestException('该用户无权限登录')
+        }
         return user
     }
 }

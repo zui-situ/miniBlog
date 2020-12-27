@@ -4,6 +4,7 @@ import { Message } from '@app/db/models/message.model';
 import { ApiTags } from '@nestjs/swagger';
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { MessagesService } from './messages.service';
 
 
 @Crud({
@@ -19,29 +20,13 @@ import { ReturnModelType } from '@typegoose/typegoose';
 
 export class MessagesController {
     //注入模块
-    constructor(@InjectModel(Message) private model:ReturnModelType<typeof Message>){}
+    constructor(
+        @InjectModel(Message) private model:ReturnModelType<typeof Message>,
+        private messagesService:MessagesService
+    ){}
     //添加路由
     @Get('option')
     async option():Promise<any>{
-        return {
-            title:'消息管理',
-            addBtn:false,
-            editBtn:false,
-            translate:false,//标记上则不返回待$符号的参数
-            viewBtn:true,
-            column:[
-                { 
-                    prop:'content',
-                    label:'内容',
-                    search:true,
-                    regex:true,
-                    searchRules: [{
-                        required: false,
-                        message: "请输入内容",
-                        trigger: "blur"
-                    }],
-                }
-            ]
-        }
+        return this.messagesService.option();
     }
 }

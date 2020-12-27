@@ -48,4 +48,12 @@ export class User {
     @ApiProperty({ description:'个性签名' })
     @prop()
     utograph?: string;
+
+    @ApiProperty({ description:'超级管理权限，0是正常用户，1是超级管理员用户'})
+    @prop()
+    jurisdiction: number
+
+    @ApiProperty({ description:'删除标记,0是未删除，1是删除'})
+    @prop()
+    deleteFlag: number
 }

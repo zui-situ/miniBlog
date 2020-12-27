@@ -19,4 +19,8 @@ export class Like {
     @prop({ ref:'Comment' })
     Comment: Ref<Comment>
 
+    @ApiProperty({ description:'删除标记'})
+    @prop()
+    deleteFlag: number
+
 }

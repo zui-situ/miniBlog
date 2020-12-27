@@ -53,12 +53,14 @@ export class EventsGateway{
                     const messageData = Object.assign({
                         userId:data.senderId,
                         friendId:data.receiverId,
-                        status:1
+                        status:1,
+                        deleteFlag:0
                     },data)
                     const _messageData = Object.assign({
                         friendId:data.senderId,
                         userId:data.receiverId,
-                        status:1
+                        status:1,
+                        deleteFlag:0
                     },data)
                     const messageInfo = await this.messageModel.create(messageData)
                     console.log(messageInfo);

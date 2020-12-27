@@ -2,9 +2,10 @@ const config = Symbol('config')
 const isCompleteURL = Symbol('isCompleteURL')
 const requestBefore = Symbol('requestBefore')
 const requestAfter = Symbol('requestAfter')
+import { Config,Options } from '../types/http';
 
 class MinRequest {
-  [config] = {
+  [config]:Config = {
     baseURL: '',
     header: {
       'content-type': 'application/json'
@@ -14,14 +15,14 @@ class MinRequest {
     responseType: 'text'
   }
   interceptors = {
-    request: (func) => {
+    request: (func:any) => {
       if (func) {
         MinRequest[requestBefore] = func
       } else {
         MinRequest[requestBefore] = (request) => request
       }
     },
-    response: (func) => {
+    response: (func:any) => {
       if (func) {
         MinRequest[requestAfter] = func
       } else {
@@ -29,24 +30,25 @@ class MinRequest {
       }
     }
   }
+  static install: (Vue: any) => void;
 
-  static [requestBefore] (config) {
+  static [requestBefore] (config:Config) {
     return config
   }
 
-  static [requestAfter] (response) {
+  static [requestAfter] (response:any) {
     return response
   }
 
-  static [isCompleteURL] (url) {
+  static [isCompleteURL] (url:string) {
     return /(http|https):\/\/([\w.]+\/?)\S*/.test(url)
   }
 
-  setConfig (func) {
+  setConfig (func:Function) {
     this[config] = func(this[config])
   }
 
-  request (options = {}) {
+  request (options:any = {}) {
     options.baseURL = options.baseURL || this[config].baseURL
     options.dataType = options.dataType || this[config].dataType
     options.url = MinRequest[isCompleteURL](options.url) ? options.url : (options.baseURL + options.url)
@@ -57,24 +59,24 @@ class MinRequest {
     options = {...options, ...MinRequest[requestBefore](options)}
 
     return new Promise((resolve, reject) => {
-      options.success = function (res) {
+      options.success = function (res:any) {
         resolve(MinRequest[requestAfter](res))
       }
-      options.fail= function (err) {
+      options.fail= function (err:any) {
         reject(MinRequest[requestAfter](err))
       }
       uni.request(options)
     })
   }
 
-  get (url, data, options = {}) {
+  get (url:string, data:any, options:any = {}) {
     options.url = url
     options.data = data
     options.method = 'GET'
     return this.request(options)
   }
 
-  post (url, data, options = {}) {
+  post (url:string, data:any, options:any = {}) {
     options.url = url
     options.data = data
     options.method = 'POST'
@@ -82,7 +84,7 @@ class MinRequest {
   }
 }
 
-MinRequest.install = function (Vue) {
+MinRequest.install = function (Vue:any) {
   Vue.mixin({
     beforeCreate: function () {
 			if (this.$options.minRequest) {

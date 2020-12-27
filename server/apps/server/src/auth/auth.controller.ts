@@ -2,102 +2,51 @@ import { Controller, Post, Body, Get, UseGuards,HttpService, Query } from '@nest
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { RegisterDto } from './dto/register.dto';
 import { GetAppIdDto } from './dto/getAppId.dto';
-import { detailDto } from './dto/auth.dto';
-import { InjectModel } from 'nestjs-typegoose';
-import { User,UserDocument } from '@app/db/models/user.model';
-import { Auth } from '@app/db/models/auth.model';
-import { ReturnModelType } from '@typegoose/typegoose';
+import { DetailDto } from './dto/auth.dto';
+import { UserDocument } from '@app/db/models/user.model';
 import { AuthGuard } from '@nestjs/passport';
 import { LoginDto } from './dto/login.dto';
-import { JwtService } from '@nestjs/jwt';
-import { CurrentUser } from './current.user.decorator';
-import { AxiosResponse } from 'axios';
+import { AuthService } from './auth.service';
+import { CurrentUser } from 'libs/common/decorator/current.user.decorator';
 
 @Controller('auth')
 @ApiTags('授权')
 
 export class AuthController {
-    
     constructor(
-        private jwtService:JwtService,
-        private readonly http: HttpService,
-        @InjectModel(User) private userModel:ReturnModelType<typeof User>,
-        @InjectModel(Auth) private authModel:ReturnModelType<typeof Auth>
+        private authService:AuthService
     ){}
 
     @Post('register')
     @ApiOperation({ summary:'注册' })
-    async register(@Body() dto:RegisterDto):Promise<UserDocument>{
-        const { username,password }:{ username:string,password:string } = dto;
-        const user = await this.userModel.create({
-            username,
-            password
-        })
-        return user;
+    async register(@Body() dto:RegisterDto):Promise<any>{
+        return this.authService.register(dto);
     }
 
     @Post('login')
     @ApiOperation({ summary:'登录' })
     @UseGuards(AuthGuard('local'))
     async login(@Body() dto:LoginDto, @CurrentUser() user:UserDocument):Promise<any>{
-        return {
-            token: this.jwtService.sign(String(user._id))
-        }
+        return this.authService.login(dto,user);
     }
 
     @Get('user')
     @ApiOperation({ summary:'获取用户信息' })
     @UseGuards(AuthGuard('jwt'))
     @ApiBearerAuth()//标签这个接口需要传递token
-    async user(@CurrentUser() user:UserDocument):Promise<User>{
-        return user;
+    async user(@CurrentUser() user:UserDocument):Promise<any>{
+        return this.authService.user(user);
     }
 
     @Get('userInfoByUserId')
     @ApiOperation({ summary:'通过userId获取用户信息' })
-    async userInfoByUserId(@Query() dto:detailDto):Promise<User>{
-        const user = await this.userModel.findById(dto.id)
-        return user;
+    async userInfoByUserId(@Query() dto:DetailDto):Promise<any>{
+        return this.authService.userInfoByUserId(dto);
     }
 
     @Post('wxSaveUserByOpenId')
     @ApiOperation({ summary:'通过openid保存用户信息' })
     async wxSaveUserByOpenId(@Body() dto:GetAppIdDto):Promise<any>{
-        const response:any = await this.http.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${dto.appId}&secret=${process.env.APP_SECRET}&js_code=${dto.code}&grant_type=authorization_code`).toPromise();
-        const { openid }:{openid:string} = response.data;
-        const authData:any = await this.authModel.findOne({openid});
-        if(authData){
-            const user = await this.userModel.findByIdAndUpdate(authData.user,{nickName:dto.nickName,avatarUrl:dto.avatarUrl})
-            return {
-                openid,
-                token : this.jwtService.sign(String(authData.user)),
-                user:user._id,
-                nickName:user.nickName,
-                avatarUrl:user.avatarUrl
-            };
-        }else{
-            //不存在对应的用户，则创建用户并返回用户信息
-            const user = await this.userModel.create({
-                username:dto.nickName,
-                nickName:dto.nickName,
-                avatarUrl:dto.avatarUrl,
-                count:0,
-                backgroundImage:'',
-                utograph:''
-            });
-            await this.authModel.create({
-                user:user._id,
-                openid,
-                nickName:dto.nickName,
-                avatarUrl:dto.avatarUrl
-            })
-            return {
-                openid,
-                token:this.jwtService.sign(String(user._id)),
-                user:user._id,
-                nickName:user.nickName,
-                avatarUrl:user.avatarUrl
-            }
-        }
+        return this.authService.wxSaveUserByOpenId(dto);
     }
 }

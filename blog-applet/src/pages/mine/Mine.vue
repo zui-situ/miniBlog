@@ -3,7 +3,7 @@
         <view class="page-content bg-white">
             <view class="page-top d-flex jc-start ai-center pb-2" :style="{backgroundImage:'url('+(userInfo.backgroundImage || defaultBg)+')'}">
                 <!-- <image src="../../static/images/mine/timg.jpg"></image> -->
-                <view class="mine-info-head" @click="navigateTo('./PersonalData')">
+                <view class="mine-info-head" @click="loginStatus && navigateTo('./PersonalData')">
                     <open-data type="userAvatarUrl" class="user-img"></open-data>
                 </view>
                 <view class="d-flex flex-column jc-center ai-start pl-2">

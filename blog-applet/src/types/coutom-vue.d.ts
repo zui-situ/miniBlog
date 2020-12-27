@@ -1,4 +1,4 @@
-import minRequest from '../models/api.js'
+import minRequest from '../models/api'
 import Vue from 'vue'
 import store from '../store'
 import { navigateBack } from './common.d'
@@ -8,5 +8,6 @@ declare module 'vue/types/vue' {
     $http:any,
     $store:store
     navigateBack:any
+    minRequest:any
   }
 }

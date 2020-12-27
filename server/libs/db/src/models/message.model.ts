@@ -37,4 +37,8 @@ export class Message {
     @ApiProperty({ description:'消息状态 1：未读 2：已读 3：删除，标记不同消息状态，可以实现统计未读消息数，逻辑删除用户恢复等' })
     @prop()
     status?: number;
+
+    @ApiProperty({ description:'删除标记'})
+    @prop()
+    deleteFlag: number
 }

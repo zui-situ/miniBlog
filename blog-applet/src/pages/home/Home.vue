@@ -1,9 +1,6 @@
 <template>
     <view class="home bg-white">
         <view class="page-content bg-white">
-            <!-- <view class="wrap">
-                <u-swiper :list="list" :effect3d="true" :title="true"></u-swiper>
-            </view> -->
             <view>
                 <u-sticky>
                     <view class="pr-7 pl-7 w-100 bg-white">
@@ -28,6 +25,7 @@
     import CardList from '../../components/CardList.vue';  
     import { namespace } from 'vuex-class';
     const chatModule = namespace('chat');
+    const appModule = namespace('app');
     @Component({ 
         components: {
             CardList
@@ -41,20 +39,6 @@
             name: '关注'
         }]
         current:number = 0;// tabs组件的current值，表示当前活动的tab选项
-        list:Array<Object> = [
-            {
-                image: '/static/images/home/1.jpg',
-                title: '蒹葭苍苍，白露为霜。所谓伊人，在水一方'
-            },
-            {
-                image: '/static/images/home/2.jpg',
-                title: '溯洄从之，道阻且长。溯游从之，宛在水中央'
-            },
-            {
-                image: '/static/images/home/3.jpg',
-                title: '蒹葭萋萋，白露未晞。所谓伊人，在水之湄'
-            }
-        ]
         pageNo:number = 1;
         pageSize:number = 10;
         totalPage:number = 0;
@@ -66,10 +50,13 @@
         articleList:Array<Object> = [];//我的文章列表
         followionList:Array<Object> = [];//收藏的文章列表
         @chatModule.Action('connectSocket') connectSocket: any;
+        @appModule.Getter('loginStatus') loginStatus:any;
         onLoad(){
             this.getArticleList();
-            this.followArticleList();
-            this.connectSocket();
+            if(this.loginStatus){
+                this.followArticleList();
+                this.connectSocket();
+            }
         }
         //tab方法
         tabsChange(index:number):void {

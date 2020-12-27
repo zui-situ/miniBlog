@@ -27,4 +27,8 @@ export class Auth {
     @ApiProperty({ description:'微信头像'})
     @prop()
     avatarUrl: string
+
+    @ApiProperty({ description:'删除标记'})
+    @prop()
+    deleteFlag: number
 }

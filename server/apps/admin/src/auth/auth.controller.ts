@@ -1,26 +1,25 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
-import { RegisterDto } from './dto/register.dto';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { LoginDto } from './dto/login.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { AuthService } from './auth.service';
+import { UserDocument } from '@app/db/models/user.model';
+import { AuthGuard } from '@nestjs/passport';
+import { CurrentUser } from 'libs/common/decorator/current.user.decorator';
 
 
 @Controller('auth')
 @ApiTags('用户')
 export class AuthController {
-    @Post('register')
-    @ApiOperation({ summary:'注册' })
-    async register(@Body() dto:RegisterDto):Promise<RegisterDto>{
-        return dto
-    }
+    constructor(
+        private authService: AuthService
+    ){}
 
     @Post('login')
     @ApiOperation({ summary:'登录' })
-    async login(@Body() dto:RegisterDto):Promise<RegisterDto>{
-        return dto
+    @UseGuards(AuthGuard('local'))
+    async login(@Body() dto:LoginDto, @CurrentUser() user: UserDocument):Promise<any>{
+        return this.authService.login(dto,user);
     }
 
-    @Get('user')
-    @ApiOperation({ summary:'获取用户信息' })
-    async user():Promise<any>{
-        return;
-    }
+    
 }

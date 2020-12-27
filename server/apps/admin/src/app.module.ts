@@ -9,14 +9,20 @@ import { MulterModule } from '@nestjs/platform-express';
 import MAO = require('multer-aliyun-oss');
 import { CommonModule } from 'libs/common/src';
 import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
 import { CommentsModule } from './comments/comments.module';
 import { MessagesModule } from './messages/messages.module';
 import { ActionsModule } from './actions/actions.module';
+import { PassportModule } from '@nestjs/passport';
+import { LocalStrategy } from 'libs/common/strategy/local.strategy';
+import { AuthModule } from './auth/auth.module';
+import { ArticlesService } from './articles/articles.service';
 
 
 @Module({
   imports: [
     CommonModule,
+    PassportModule,
     //异步加载OSS配置
     MulterModule.registerAsync({
       useFactory(){
@@ -32,10 +38,11 @@ import { ActionsModule } from './actions/actions.module';
         }
       }
     }),
+    AuthModule,
     UsersModule, 
     ArticlesModule, CommentsModule, MessagesModule, ActionsModule
   ],
-  controllers: [AppController, ArticlesController, AuthController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

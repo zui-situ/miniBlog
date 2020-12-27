@@ -28,4 +28,8 @@ export class Comment {
     @ApiProperty({ description:'点赞数' })
     @prop()
     count?: number;
+
+    @ApiProperty({ description:'删除标记'})
+    @prop()
+    deleteFlag?: number
 }

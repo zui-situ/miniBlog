@@ -40,7 +40,7 @@
                 <card-list :list="articleList" :status="status" :showUser="false"></card-list>
             </view>
         </view>
-        <view class="d-flex jc-around ai-center d-fixed w-100 bottom-btn bg-white zIndex-999" v-show="user.userId != userId">
+        <view class="d-flex jc-around ai-center d-fixed w-100 bottom-btn bg-white zIndex-999" v-show="user.userId != userId && loginStatus">
             <view class="flex-1 d-flex jc-center ai-center h-100" @click="navigateTo('../message/Chat?friendId='+userId)">
                 <u-icon name="liaotian" custom-prefix="custom-icon" size="30" color="#888888"></u-icon>
                 <text class="fs-l pl-1">聊天</text>
@@ -66,7 +66,6 @@
     export default class Mine extends Vue{
         defaultBg:string = '';
         status:string = 'loadmore';
-        loginStatus:boolean = false;//登录状态
         pageNo:number = 1;
         pageSize:number = 10;
         totalPage:number = 0;
@@ -80,13 +79,14 @@
             uToast:HTMLFormElement
         }
         @appModule.Getter('user') user:any
+        @appModule.Getter('loginStatus') loginStatus:any;
         onLoad(opt:any){
             this.defaultBg = '../../static/images/mine/timg.jpg'
             this.userId = opt.userId;
             this.getUserInfo();
             this.getArticleList();
             this.getFollowNum();
-            this.getFollowStatus()
+            this.loginStatus && this.getFollowStatus()
         }
         // onShow(){
         //    this.getArticleList();

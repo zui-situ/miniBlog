@@ -3,10 +3,17 @@ import VueRouter, { RouteConfig }  from 'vue-router'
 import Home from '../views/Home.vue'
 import Main from '../views/Main.vue'
 import ResourceCrud from '../views/ResourceCrud.vue';
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
-  const routes: RouteConfig[] = [
+const routes: RouteConfig[] = [
+  {
+    path:'/login',
+    name:'Login',
+    component:Login,
+    meta:{ isPublic:true }
+  },
   {
     path: '/',
     name: 'Main',
@@ -21,5 +28,10 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes
 })
+
+const originalPush:any = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location:any) {
+    return originalPush.call(this, location).catch((err:any) => err)
+}
 
 export default router

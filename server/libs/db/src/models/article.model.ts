@@ -31,4 +31,8 @@ export class Article {
     @ApiProperty({ description:'浏览数' })
     @prop()
     readNum?: number;
+    
+    @ApiProperty({ description:'删除标记'})
+    @prop()
+    deleteFlag: number
 }

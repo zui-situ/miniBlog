@@ -104,6 +104,7 @@
         }
         isMine:boolean = false;//是否自己的文章
         @appModule.Getter('user') user:any
+        @appModule.Getter('loginStatus') loginStatus:any;
         userId:string = this.$store.state.userId || null;
         articleUser:string = '';
         onLoad(opt:any){
@@ -114,8 +115,10 @@
             this.id = opt.id;
             this.readNumAdd();
             this.getDetail();
-            this.getCollectStatus();
-            this.getFollowStatus();
+            if(this.loginStatus){
+                this.getCollectStatus();
+                this.getFollowStatus();
+            }
             this.getCommentList();
         }
         //获取文章详情

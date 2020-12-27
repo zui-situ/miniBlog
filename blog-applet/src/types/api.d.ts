@@ -1,4 +1,4 @@
-import minRequest from './api.js' 
+import minRequest from '../models/api' 
 
 declare module 'vue/types/options' {
     interface ComponentOptions<V extends Vue> {
@@ -6,4 +6,4 @@ declare module 'vue/types/options' {
     }
 }
 
-export = minRequest;
+// export = minRequest;

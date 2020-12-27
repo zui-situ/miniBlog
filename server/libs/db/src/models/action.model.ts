@@ -18,13 +18,17 @@ export class Action {
 
     @ApiProperty({ description:'动作对应的模块名称' })
     @prop({ enum: ['User', 'Article','Comment'] })
-    type: string;
+    type: string
 
     @ApiProperty({ description:'对应的模块' })
     @prop({ refPath:'type' })
-    object: Ref<User|Article|Comment>;
+    object: Ref<User|Article|Comment>
 
     @ApiProperty({ description:'动作名称' })
     @prop({ enum: ['follow','collection','upVote'] })
-    name: string;
+    name: string
+
+    @ApiProperty({ description:'删除标记'})
+    @prop()
+    deleteFlag: number
 }

@@ -31,11 +31,10 @@
             })
             return data;
         },
-        comments:function(data:any,_this:Vue):Promise<any>{
+        comments:function(data:any):Promise<any>{
             data.data.map(async(item:any)=>{
-                const res = await _this.$http.get(`users/${item.user}`);
-                console.log(res);
-                _this.$set(item,'userName',res.data.username);
+                const res = await Vue.prototype.$http.get(`users/${item.user}`);
+                Vue.prototype.$set(item,'userName',res.username);
             })
             return data;
         }
@@ -56,7 +55,6 @@
         async fetchOption(){
             const res = await this.$http.get(`${this.resource}/option`);
             this.option = res.data;
-            console.log(res);
         }
         async sortChange({prop,order}:{prop:any, order:any}){
             if(!order){
@@ -86,14 +84,13 @@
         }
 
         async fetch(){
-            const res = await this.$http.get(this.resource,{
+            const res:any = await this.$http.get(this.resource,{
                 params:{
                     query:this.query
                 }
             });
-            this.page.total = res.data.total;
-            this.data = handleData[this.resource]?handleData[this.resource](res.data,this) : res.data;
-            console.log(this.data);
+            this.page.total = res.total;
+            this.data = handleData[this.resource]?handleData[this.resource](res) : res;
         }
         
         async create(row:any, done:any){
