@@ -55,6 +55,7 @@ const mutations: MutationTree<ChatState> = {
   },
   //添加对话信息
   [ADD_TARGET_MES](state,payload) {
+    console.log(payload);
     if (payload.code=='OK') {
       state.targetMessage.push(payload.messageInfo);
     }

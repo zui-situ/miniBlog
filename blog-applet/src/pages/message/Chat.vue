@@ -50,7 +50,7 @@
 						type="text"
 						class="content"
 						id="input"
-						v-model="message"
+						v-model.trim="message"
 						:hold-keyboard="true"
 						:confirm-type="'send'"
 						:confirm-hold="true"
@@ -86,6 +86,7 @@
 			</view>
 			<view class="text">{{voiceIconText}}</view>
 		</view> -->
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -111,6 +112,9 @@
 		noMore:boolean = false
 		historyNum:number = 0
 		nowDate:Date = new Date()
+		$refs!: {
+            uToast:HTMLFormElement
+        }
 		@appModule.Getter('user') user:any
 		@chatModule.Getter('targetMessage') targetMessage:any
 		@chatModule.Mutation('set_target_id') setTargetId:any
@@ -153,7 +157,14 @@
 		}
 		//发送信息
         sendMessage(){
-            let socket = this.$store.state.chat.socket;
+			let socket = this.$store.state.chat.socket;
+			if(this.message.length === 0) {
+				this.$refs.uToast.show({
+					title: '您还没有输入任何内容哦!',
+					type: 'warning'
+				})
+				return;
+			}
             if(socket.connected){
                 socket.emit("sendMessage", {
                     senderId: this.user.userId,

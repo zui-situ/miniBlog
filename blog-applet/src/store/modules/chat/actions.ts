@@ -14,6 +14,9 @@ import {
 const actions: ActionTree<ChatState, RootState> = {
   // 初始化socket连接和监听socket事件
   async connectSocket({ commit, state, dispatch, rootState }, callback) {
+    if(state.socket){
+      return;
+    }
     // let friendGather = state.friendGather;
     let socket = io(process.env.VUE_APP_WSS_URL,{
       query: {
@@ -30,6 +33,7 @@ const actions: ActionTree<ChatState, RootState> = {
       // uni.setStorageSync('socket',socket);
     });
     socket.on('messageFromFriend', (res: any) => {
+      console.log(res);
       commit(ADD_TARGET_MES,res);
       commit(UPDATE_DIALOG_MES,res);
       // if (!res.code) {
