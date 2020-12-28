@@ -143,6 +143,7 @@
                 pageNo:this.pageNo,
                 pageSize:this.pageSize
             }).then((data:any)=>{
+                uni.stopPullDownRefresh();
                 this.totalPage = data.pagination.totalPage;
                 if(this.pageNo>=this.totalPage) this.status = 'nomore';
                 else this.status = 'loading';
@@ -162,6 +163,7 @@
                 name:"collection",
                 user:this.user.userId
             }).then((data:any)=>{
+                uni.stopPullDownRefresh();
                 this.collectTotalPage = data.pagination.totalPage;
                 if(this.collectPageNo>=this.collectTotalPage) this.collectStatus = 'nomore';
                 else this.collectStatus = 'loading';
@@ -192,7 +194,7 @@
                 this.followInfo = data;
             })
         }
-        //下拉刷新
+        //上拉加载
         onReachBottom() {
             if(this.current===0){
                 if(this.pageNo >= this.totalPage) return ;
@@ -210,6 +212,16 @@
                 }, 2000)
             }
 			
+        }
+        //下拉刷新
+        onPullDownRefresh(){
+            if(this.current===0){
+                this.pageNo = 1;
+                this.getArticleList();
+            }else{
+                this.collectPageNo = 1;
+                this.getActionList();
+            }
 		}
     }
 </script>

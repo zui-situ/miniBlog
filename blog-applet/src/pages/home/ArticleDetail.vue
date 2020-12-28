@@ -140,7 +140,7 @@
                 if(this.pageNo>=this.totalPage) this.status = 'nomore';
                 else this.status = 'loading';
                 data.list.map(async (item:any)=>{
-                    item.status = await this.getUpVoteStatus(item._id);
+                    item.status = await this.getStatus('Comment','upVote',item._id);
                     this.commentList.push(item);
                 })
             })
@@ -194,36 +194,24 @@
                 })
             })
         }
-        //获取点赞状态
-        getUpVoteStatus(id:string){
-            return new Promise((resolve)=>{
+        //获取收藏状态
+        async getCollectStatus(){
+            this.collectStatus = await this.getStatus('Article','collection',this.id)
+        }
+        //获取关注状态
+        async getFollowStatus(){
+            this.followStatus = await this.getStatus('User','follow',this.articleUser)
+        }
+        //获取状态
+        getStatus(type:string,name:string,object:string):Promise<boolean>{
+            return new Promise(resolve=>{
                 this.$http.getActionStatus({
-                    type:'Comment',
-                    object:id,
-                    name:'upVote'
+                    type,
+                    object,
+                    name,
                 }).then((data:any)=>{
                     resolve(data.status);
                 })
-            })
-        }
-        //获取收藏状态
-        getCollectStatus(){
-            this.$http.getActionStatus({
-                type:'Article',
-                object:this.id,
-                name:'collection'
-            }).then((data:any)=>{
-                this.collectStatus = data.status;
-            })
-        }
-        //获取关注状态
-        getFollowStatus(){
-            this.$http.getActionStatus({
-                type:'User',
-                object:this.articleUser,
-                name:'follow'
-            }).then((data:any)=>{
-                this.followStatus = data.status;
             })
         }
         //新建评论

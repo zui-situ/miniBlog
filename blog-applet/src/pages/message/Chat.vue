@@ -7,7 +7,7 @@
 			<view v-else-if="noMore" class="no-data">无更多历史信息</view>
 			<view class="message" v-for="(item, index) in list" :key="item._id" :id="`msg-${item._id}`">
 				<view class="message-item " :class="item.senderId === user.userId ? 'right' : 'left'">
-					<image class="img" :src="item.senderId === user.userId ? user.avatarUrl:friendInfo.avatarUrl" mode="" ></image>
+					<image class="img" :src="item.senderId === user.userId ? user.avatar:friendInfo.avatarUrl" mode="" ></image>
 					<!-- contentType = 1 文本 -->
 					<view class="content" v-if="item.messageType == 1">{{ item.content }}</view>
 					<!-- contentType = 2 语音 -->

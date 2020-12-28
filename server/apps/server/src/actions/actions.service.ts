@@ -21,7 +21,9 @@ export class ActionsService {
         _dto.user = user._id;
         const count = await this.actionModel.countDocuments(_dto);
         return {
-            data:count > 0
+            data:{
+                status:count > 0
+            }
         }
     }
     /* 切换行动状态 */
@@ -29,7 +31,7 @@ export class ActionsService {
         const _dto:any = dto;
         _dto.user = user._id;
         const res = await this.getStatus(_dto,user);
-        if(res.data){
+        if(res.data.status){
             await this[dto.type+'Model'].findByIdAndUpdate(_dto.object,{$inc: {count:-1 }})
             await this.actionModel.deleteMany(_dto);
         }else {
